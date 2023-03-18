@@ -1,3 +1,4 @@
+import 'package:convenient_way_sender/app/data/constants/role_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/base/base_controller.dart';
@@ -37,6 +38,7 @@ class LoginController extends BaseController {
     LoginModel loginModel = LoginModel(
       userName: userName,
       password: password,
+      role: RoleName.sender,
       registrationToken: await FirebaseMessagingService.getToken(),
     );
     await _authController.login(loginModel);

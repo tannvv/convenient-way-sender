@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -96,7 +98,6 @@ class RegisterController extends BaseController {
         debugPrint('Auth Completed! \nCredential: $credential');
       },
       verificationFailed: (FirebaseAuthException e) {
-        isLoading = false;
         if (e.message != null) {
           if (e.message!.contains('block')) {
             ToastService.showError(
@@ -109,7 +110,9 @@ class RegisterController extends BaseController {
         }
       },
       codeSent: (String verificationId, int? resendToken) async {
-        isLoading = false;
+        Timer(const Duration(seconds: 10), () {
+          isLoading = false;
+        });
         debugPrint(
             'Đã gửi mã OTP \nResendToken: $resendToken, VerificationId: $verificationId');
         CreateAccountModel createAccountModel = CreateAccountModel(
@@ -120,7 +123,7 @@ class RegisterController extends BaseController {
             lastName: _lastName,
             phone: _phone,
             photoUrl: _photoUrl,
-            role: RoleName.user,
+            role: RoleName.sender,
             gender: _gender.value);
         ArgsRegisterModel argsRegisterModel = ArgsRegisterModel(
             createAccountModel: createAccountModel,

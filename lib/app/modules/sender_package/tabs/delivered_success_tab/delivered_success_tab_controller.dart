@@ -10,7 +10,7 @@ import 'package:convenient_way_sender/app/data/repository/request_model/package_
 import 'package:convenient_way_sender/app/data/repository/response_model/simple_response_model.dart';
 import 'package:convenient_way_sender/app/routes/app_pages.dart';
 
-class DeliveredTabController extends SenderTabBaseController<Package>
+class DeliveredSuccessTabController extends SenderTabBaseController<Package>
     with GetSingleTickerProviderStateMixin {
   final AuthController _authController = Get.find<AuthController>();
   final PackageReq _packageRepo = Get.find(tag: (PackageReq).toString());
@@ -19,7 +19,7 @@ class DeliveredTabController extends SenderTabBaseController<Package>
   Future<void> fetchDataApi() async {
     PackageListModel requestModel = PackageListModel(
         senderId: _authController.account!.id,
-        status: PackageStatus.DELIVERED,
+        status: PackageStatus.DELIVERED_SUCCESS,
         pageIndex: pageIndex,
         pageSize: pageSize);
     Future<List<Package>> future = _packageRepo.getList(requestModel);

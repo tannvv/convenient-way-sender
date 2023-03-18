@@ -8,8 +8,8 @@ import 'package:convenient_way_sender/app/modules/sender_package/widgets/package
 import 'package:convenient_way_sender/app/modules/sender_package/widgets/user_info.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/widgets/wrap_item.dart';
 
-class DeliveredTabItem extends StatelessWidget {
-  const DeliveredTabItem(
+class DeliveredSuccessTabItem extends StatelessWidget {
+  const DeliveredSuccessTabItem(
       {Key? key,
       required this.package,
       required this.onConfirmSuccess,

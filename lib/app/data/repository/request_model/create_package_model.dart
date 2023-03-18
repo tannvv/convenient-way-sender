@@ -20,6 +20,11 @@ class CreatePackageModel {
   int? priceShip;
   String? photoUrl;
   String? note;
+  String? pickupTimeStart;
+  String? pickupTimeOver;
+  String? deliveryTimeStart;
+  String? deliveryTimeOver;
+  String? expiredTime;
   String? senderId;
   List<CreateProductModel>? products;
 
@@ -43,6 +48,11 @@ class CreatePackageModel {
       this.priceShip,
       this.photoUrl,
       this.note,
+      this.pickupTimeStart,
+      this.pickupTimeOver,
+      this.deliveryTimeStart,
+      this.deliveryTimeOver,
+      this.expiredTime,
       this.senderId,
       this.products});
 
@@ -66,6 +76,11 @@ class CreatePackageModel {
     priceShip = json['priceShip'];
     photoUrl = json['photoUrl'];
     note = json['note'];
+    pickupTimeStart = json['pickupTimeStart'];
+    pickupTimeOver = json['pickupTimeOver'];
+    deliveryTimeStart = json['deliveryTimeStart'];
+    deliveryTimeOver = json['deliveryTimeOver'];
+    expiredTime = json['expiredTime'];
     senderId = json['senderId'];
   }
 
@@ -90,6 +105,11 @@ class CreatePackageModel {
     data['priceShip'] = priceShip;
     data['photoUrl'] = photoUrl;
     data['note'] = note;
+    data['pickupTimeStart'] = pickupTimeStart;
+    data['pickupTimeOver'] = pickupTimeOver;
+    data['deliveryTimeStart'] = deliveryTimeStart;
+    data['deliveryTimeOver'] = deliveryTimeOver;
+    data['expiredTime'] = expiredTime;
     data['senderId'] = senderId;
     if (products != null) {
       data['products'] = products?.map((v) => v.toJson()).toList();

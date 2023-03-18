@@ -1,14 +1,15 @@
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/pickup_success_tab/pickup_success_tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:convenient_way_sender/app/core/widgets/custom_footer_smart_refresh.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_failed_tab/delivery_failed_tab_controller.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_failed_tab/delivery_failed_tab_item.dart';
 
-class DeliveryFailedTabView extends GetView<DeliveryFailedTabController> {
-  const DeliveryFailedTabView({Key? key}) : super(key: key);
+import 'pickup_success_tab_item.dart';
+
+class PickupSuccessTabView extends GetView<PickupSuccessTabController> {
+  const PickupSuccessTabView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,10 +24,19 @@ class DeliveryFailedTabView extends GetView<DeliveryFailedTabController> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DeliveryFailedTabItem(
+                        PickupSuccessTabItem(
                             package: controller.dataApis[index],
-                            showInfoDeliver: () => controller.showInfoDeliver(
-                                controller.dataApis[index].deliver!)),
+                            onConfirmPackage: () =>
+                                controller.accountDeliveredPackage(
+                                    controller.dataApis[index].id!),
+                            onCodeConfirm: () => controller.senderConfirmCode(
+                                controller.dataApis[index].id!),
+                            onShowQR: () => controller
+                                .showQRCode(controller.dataApis[index].id!),
+                            showMapTracking: () => controller
+                                .showMapTracking(controller.dataApis[index]),
+                            onShowDeliverInfo: () => controller.showInfoDeliver(
+                                controller.dataApis[index].deliver!))
                       ],
                     );
                   },

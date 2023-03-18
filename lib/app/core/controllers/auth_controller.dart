@@ -134,7 +134,7 @@ class AuthController extends BaseController {
         prefs.setString(PrefsMemory.token, token!);
         prefs.setString(PrefsMemory.userJson, jsonEncode(response.account));
 
-        await BackgroundNotificationService.initializeService();
+        // await BackgroundNotificationService.initializeService();
         await FirebaseMessagingService.registerNotification(
             _account.value!.id!);
         loadBalance();
@@ -194,7 +194,7 @@ class AuthController extends BaseController {
     ));
     // BackgroundNotificationService.stopService();
     await FirebaseMessagingService.unregisterNotification(_account.value!.id!);
-    BackgroundNotificationService.stopService();
+    // BackgroundNotificationService.stopService();
     var future =
         _accountRepo.logout(LogoutModel(accountId: _account.value!.id!));
     await callDataService(future, onError: showError);

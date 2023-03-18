@@ -3,7 +3,7 @@ import 'package:convenient_way_sender/app/data/models/polyline_model.dart';
 import 'package:convenient_way_sender/app/data/models/response_goong_default.dart';
 import 'package:convenient_way_sender/app/data/models/response_goong_model.dart';
 import 'package:convenient_way_sender/app/data/repository/goong_req.dart';
-import 'package:convenient_way_sender/app/data/repository/request_model/request_polyline_model';
+import 'package:convenient_way_sender/app/data/repository/request_model/request_polyline_model.dart';
 import 'package:convenient_way_sender/app/network/dio_provider.dart';
 
 class GoongReqImp extends BaseRepository implements GoongReq {

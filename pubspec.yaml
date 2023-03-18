@@ -88,6 +88,10 @@ dependencies:
   flutter_switch: ^0.3.2
   flutter:
     sdk: flutter
+  syncfusion_flutter_datepicker: ^20.4.54
+  time_range: ^1.1.0
+  time_range_picker: ^2.2.0
+  day_night_time_picker: ^1.2.0+2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

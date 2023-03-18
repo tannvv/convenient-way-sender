@@ -9,8 +9,8 @@ import 'package:convenient_way_sender/app/modules/sender_package/widgets/package
 import 'package:convenient_way_sender/app/modules/sender_package/widgets/wrap_item.dart';
 import '../../widgets/user_info.dart';
 
-class DeliverPickupTabItem extends StatelessWidget {
-  const DeliverPickupTabItem(
+class SelectedTabItem extends StatelessWidget {
+  const SelectedTabItem(
       {Key? key,
       required this.package,
       required this.onShowQR,

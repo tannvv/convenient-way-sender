@@ -1,5 +1,6 @@
 import 'package:convenient_way_sender/app/core/values/app_colors.dart';
 import 'package:convenient_way_sender/app/modules/home/widgets/nav_button.dart';
+import 'package:convenient_way_sender/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -89,11 +90,11 @@ class HomeView extends GetView<HomeController> {
           child: FloatingActionButton(
             backgroundColor: AppColors.primary400,
             child: Icon(
-              FontAwesome.location,
+              Icons.create_new_folder,
               size: 30.r,
             ),
             onPressed: () {
-              controller.changeTab(4);
+              Get.toNamed(Routes.CREATE_PACKAGE_PAGE);
             },
           ),
         ),

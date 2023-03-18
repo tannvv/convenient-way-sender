@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:convenient_way_sender/app/core/utils/datetime_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -16,7 +17,8 @@ import 'package:convenient_way_sender/app/data/repository/goong_req.dart';
 import 'package:convenient_way_sender/app/data/repository/package_req.dart';
 import 'package:convenient_way_sender/app/data/repository/request_model/create_package_model.dart';
 import 'package:convenient_way_sender/app/modules/create_package_page/models/create_product_model.dart';
-import 'package:convenient_way_sender/app/routes/app_pages.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
@@ -67,7 +69,7 @@ class CreatePackagePageController extends BaseController {
 
   final formKey = GlobalKey<FormState>();
 
-  final int maxStep = 2;
+  final int maxStep = 3;
   final Rx<int> _currentStep = 0.obs;
   int get currentStep => _currentStep.value;
   set currentStep(int value) => _currentStep.value = value;
@@ -89,10 +91,18 @@ class CreatePackagePageController extends BaseController {
   double? weight;
   int priceShip = 0;
   String note = '';
+  Rx<TimeOfDay?> pickupTimeStart = Rx<TimeOfDay?>(null);
+  Rx<TimeOfDay?> pickupTimeEnd = Rx<TimeOfDay?>(null);
+  Rx<TimeOfDay?> deliveryTimeStart = Rx<TimeOfDay?>(null);
+  Rx<TimeOfDay?> deliveryTimeEnd = Rx<TimeOfDay?>(null);
+  Rx<DateTime?> expiredDate = Rx<DateTime?>(null);
   RxList<CreateProductModel> products = <CreateProductModel>[].obs;
 
   final TextEditingController pickupTxtCtrl = TextEditingController();
   final TextEditingController senderTxtCtrl = TextEditingController();
+
+  String get getExpiredTime =>
+      DateTimeUtils.dateTimeToString(expiredDate.value);
   @override
   void onInit() {
     setDataReCreate();
@@ -171,11 +181,16 @@ class CreatePackagePageController extends BaseController {
         {
           bool pickupFormCheck = pickupFormKey.currentState!.validate();
           bool startLocationCheck = startLocationKey.currentState!.validate();
-          if (pickupFormCheck && startLocationCheck) currentStep++;
+          if (pickupFormCheck && startLocationCheck) {
+            currentStep++;
+          }
         }
         break;
       case 1:
         if (receiverFormKey.currentState!.validate()) currentStep++;
+        break;
+      case 2:
+        if (productsFormKey.currentState!.validate()) currentStep++;
         break;
     }
   }
@@ -193,7 +208,6 @@ class CreatePackagePageController extends BaseController {
   }
 
   void submit() {
-    if (!productsFormKey.currentState!.validate()) return;
     MaterialDialogService.showConfirmDialog(
         msg: 'Bạn chắc chắn muốn tạo gói hàng này?',
         onConfirmTap: () async {
@@ -215,23 +229,22 @@ class CreatePackagePageController extends BaseController {
   Future<void> uploadImageAndCreatePackage() async {
     String packageId = const Uuid().v4();
 
-    List<String> urlsImage =
-        await _pickUpFileController.uploadImagesToFirebase2(
-      images: images,
-      url: 'packages/$packageId',
-      onComplete: Get.context!.loaderOverlay.hide,
-      onStart: () => Get.context!.loaderOverlay.show(
-          widget: const CustomOverlay(
-        content: 'Đang tải ảnh lên...',
-      )),
-    );
-    if (urlsImage.isEmpty) return;
-    Get.context!.loaderOverlay.show(
-        widget: const CustomOverlay(
-      content: 'Đang tạo gói hàng...',
-    ));
-    // distance.value = Geolocator.distanceBetween(startLatitude!, startLatitude!,
-    //     destinationLatitude!, destinationLongitude!);
+    // List<String> urlsImage =
+    //     await _pickUpFileController.uploadImagesToFirebase2(
+    //   images: images,
+    //   url: 'packages/$packageId',
+    //   onComplete: Get.context!.loaderOverlay.hide,
+    //   onStart: () => Get.context!.loaderOverlay.show(
+    //       widget: const CustomOverlay(
+    //     content: 'Đang tải ảnh lên...',
+    //   )),
+    // );
+    // if (urlsImage.isEmpty) return;
+    // Get.context!.loaderOverlay.show(
+    //     widget: const CustomOverlay(
+    //   content: 'Đang tạo gói hàng...',
+    // ));
+
     distance.value = calculateDistance(startLatitude, startLongitude,
         destinationLatitude, destinationLongitude);
     CreatePackageModel createPackageModel = CreatePackageModel(
@@ -251,8 +264,17 @@ class CreatePackagePageController extends BaseController {
       width: width,
       height: height,
       weight: weight,
-      photoUrl: urlsImage.first,
-      priceShip: 20000,
+      photoUrl: '',
+      priceShip: getPriceShip(),
+      pickupTimeStart: DateTimeUtils.dateTimeToStringAPI(DateTime(
+          0, 0, 0, pickupTimeStart.value!.hour, pickupTimeStart.value!.minute)),
+      pickupTimeOver: DateTimeUtils.dateTimeToStringAPI(DateTime(
+          0, 0, 0, pickupTimeEnd.value!.hour, pickupTimeEnd.value!.minute)),
+      deliveryTimeStart: DateTimeUtils.dateTimeToStringAPI(DateTime(0, 0, 0,
+          deliveryTimeStart.value!.hour, deliveryTimeStart.value!.minute)),
+      deliveryTimeOver: DateTimeUtils.dateTimeToStringAPI(DateTime(
+          0, 0, 0, deliveryTimeEnd.value!.hour, deliveryTimeEnd.value!.minute)),
+      expiredTime: DateTimeUtils.dateTimeToStringAPI(expiredDate.value),
       note: note,
       senderId: _authController.account?.id,
       products: products,
@@ -354,5 +376,23 @@ class CreatePackagePageController extends BaseController {
         cos((lat2 - lat1) * p) / 2 +
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     return 12742 * asin(sqrt(a));
+  }
+
+  void selectedTimePickup(TimeRange? timeRange) {
+    if (timeRange != null) {
+      pickupTimeStart.value = timeRange.startTime;
+      pickupTimeEnd.value = timeRange.endTime;
+    }
+  }
+
+  void selectedTimeDelivery(TimeRange? timeRange) {
+    if (timeRange != null) {
+      deliveryTimeStart.value = timeRange.startTime;
+      deliveryTimeEnd.value = timeRange.endTime;
+    }
+  }
+
+  void selectedExpiredTime(DateRangePickerSelectionChangedArgs data) {
+    expiredDate.value = data.value;
   }
 }

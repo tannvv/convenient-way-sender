@@ -1,14 +1,15 @@
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_failed_tab/delivered_failed_tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:convenient_way_sender/app/core/widgets/custom_footer_smart_refresh.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_tab/delivery_tab_controller.dart';
-import 'delivery_tab_item.dart';
 
-class DeliveryTabView extends GetView<DeliveryTabController> {
-  const DeliveryTabView({Key? key}) : super(key: key);
+import 'delivered_failed_tab_item.dart';
+
+class DeliveryFailedTabView extends GetView<DeliveredFailedTabController> {
+  const DeliveryFailedTabView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,19 +24,10 @@ class DeliveryTabView extends GetView<DeliveryTabController> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DeliveryTabItem(
+                        DeliveredFailedTabItem(
                             package: controller.dataApis[index],
-                            onConfirmPackage: () =>
-                                controller.accountDeliveredPackage(
-                                    controller.dataApis[index].id!),
-                            onCodeConfirm: () => controller.senderConfirmCode(
-                                controller.dataApis[index].id!),
-                            onShowQR: () => controller
-                                .showQRCode(controller.dataApis[index].id!),
-                            showMapTracking: () => controller
-                                .showMapTracking(controller.dataApis[index]),
-                            onShowDeliverInfo: () => controller.showInfoDeliver(
-                                controller.dataApis[index].deliver!))
+                            showInfoDeliver: () => controller.showInfoDeliver(
+                                controller.dataApis[index].deliver!)),
                       ],
                     );
                   },

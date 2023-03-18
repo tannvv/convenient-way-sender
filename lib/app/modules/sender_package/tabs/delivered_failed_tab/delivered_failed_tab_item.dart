@@ -7,8 +7,8 @@ import 'package:convenient_way_sender/app/modules/sender_package/widgets/package
 import 'package:convenient_way_sender/app/modules/sender_package/widgets/user_info.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/widgets/wrap_item.dart';
 
-class DeliveryFailedTabItem extends StatelessWidget {
-  const DeliveryFailedTabItem(
+class DeliveredFailedTabItem extends StatelessWidget {
+  const DeliveredFailedTabItem(
       {Key? key, required this.package, required this.showInfoDeliver})
       : super(key: key);
   final Package package;

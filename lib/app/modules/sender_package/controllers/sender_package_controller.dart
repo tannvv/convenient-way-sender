@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/controllers/auth_controller.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/approved_tab/approved_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/deliver_cancel_tab/deliver_cancel_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/deliver_pickup_tab/deliver_pickup_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_tab/delivered_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_failed_tab/delivery_failed_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_tab/delivery_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/reject_tab/reject_tab_view.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/sender_cancel_tab/sender_cancel_tab_view.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/waiting_tab/waiting_tab_view.dart';
+
+import '../tabs/delivered_failed_tab/delivered_failed_tab_view.dart';
+import '../tabs/delivered_success_tab/delivered_success_tab_view.dart';
+import '../tabs/pickup_success_tab/pickup_success_tab_view.dart';
+import '../tabs/selected_tab/selected_tab_view.dart';
 
 class SenderPackageController extends BaseController
     with GetSingleTickerProviderStateMixin {
@@ -23,21 +21,15 @@ class SenderPackageController extends BaseController
     'Chờ giao hàng',
     'Giao thành công',
     'Giao thất bại',
-    'Quản trị viên hủy',
-    'Người giao hủy',
-    'Đã hủy',
   ];
 
   final List<Widget> _screens = const [
     WaitingTabView(),
     ApprovedTabView(),
-    DeliverPickupTabView(),
-    DeliveryTabView(),
-    DeliveredTabView(),
+    SelectedTabView(),
+    PickupSuccessTabView(),
+    DeliveredSuccessTabView(),
     DeliveryFailedTabView(),
-    RejectTabView(),
-    DeliverCancelTabView(),
-    SenderCancelTabView(),
   ];
 
   List<Widget> get screens => _screens;

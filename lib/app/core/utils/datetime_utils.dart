@@ -29,7 +29,9 @@ class DateTimeUtils {
 
   static String dateTimeToStringAPI(DateTime? dateTime) {
     initializeDateFormatting();
-    return dateTime == null ? '-' : DateFormat('yyyy-MM-dd').format(dateTime);
+    return dateTime == null
+        ? '-'
+        : DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
   }
 
   static DateTime? parseDateTime(int? timestamp) {

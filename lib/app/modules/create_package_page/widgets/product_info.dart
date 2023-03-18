@@ -1,3 +1,6 @@
+import 'package:convenient_way_sender/app/core/utils/material_dialog_service.dart';
+import 'package:convenient_way_sender/app/core/values/app_colors.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -8,6 +11,7 @@ import 'package:convenient_way_sender/app/core/values/text_styles.dart';
 import 'package:convenient_way_sender/app/core/widgets/button_color.dart';
 import 'package:convenient_way_sender/app/modules/create_package_page/controllers/create_package_page_controller.dart';
 import 'package:convenient_way_sender/app/modules/create_package_page/widgets/images_view.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ProductInfo extends GetWidget<CreatePackagePageController> {
   const ProductInfo({super.key});
@@ -169,6 +173,14 @@ class ProductInfo extends GetWidget<CreatePackagePageController> {
                           Expanded(
                             flex: 2,
                             child: TextFormField(
+                              inputFormatters: [
+                                CurrencyTextInputFormatter(
+                                  decimalDigits: 0,
+                                  locale: 'vi',
+                                  symbol: '',
+                                )
+                              ],
+                              keyboardType: TextInputType.number,
                               decoration: InputStyles.createPackageZeroPadding(
                                 labelText: 'Đơn giá',
                               ).copyWith(suffixText: 'đ'),
@@ -177,11 +189,10 @@ class ProductInfo extends GetWidget<CreatePackagePageController> {
                                   ? ''
                                   : controller.products[index].price.toString(),
                               validator: FunctionUtils.validatorNotNull,
-                              keyboardType: TextInputType.number,
                               onChanged: (data) {
                                 if (data.isNotEmpty) {
                                   controller.products[index].price =
-                                      int.parse(data);
+                                      int.parse(data.replaceAll('.', ''));
                                 }
                               },
                             ),

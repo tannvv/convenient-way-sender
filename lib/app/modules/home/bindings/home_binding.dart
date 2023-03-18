@@ -1,10 +1,10 @@
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_failed_tab/delivered_failed_tab_controller.dart';
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_success_tab/delivered_success_tab_controller.dart';
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/pickup_success_tab/pickup_success_tab_controller.dart';
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/selected_tab/selected_tab_controller.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/approved_tab/approved_tab_controller.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/deliver_cancel_tab/deliver_cancel_tab_controller.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/deliver_pickup_tab/deliver_pickup_tab_controller.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_tab/delivered_tab_controller.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_failed_tab/delivery_failed_tab_controller.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivery_tab/delivery_tab_controller.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/reject_tab/reject_tab_controller.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/sender_cancel_tab/sender_cancel_tab_controller.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/tabs/success_tab/success_tab_controller.dart';
@@ -21,14 +21,16 @@ class HomeBinding extends Bindings {
   void senderTabController() {
     Get.lazyPut<ApprovedTabController>(() => ApprovedTabController());
     Get.lazyPut<DeliverCancelTabController>(() => DeliverCancelTabController());
-    Get.lazyPut<DeliverPickupTabController>(() => DeliverPickupTabController());
-    Get.lazyPut<DeliveredTabController>(() => DeliveredTabController());
-    Get.lazyPut<DeliveryFailedTabController>(
-        () => DeliveryFailedTabController());
-    Get.lazyPut<DeliveryTabController>(() => DeliveryTabController());
     Get.lazyPut<RejectTabController>(() => RejectTabController());
     Get.lazyPut<SenderCancelTabController>(() => SenderCancelTabController());
     Get.lazyPut<SuccessTabController>(() => SuccessTabController());
     Get.lazyPut<WaitingTabController>(() => WaitingTabController());
+
+    Get.lazyPut<SelectedTabController>(() => SelectedTabController());
+    Get.lazyPut<PickupSuccessTabController>(() => PickupSuccessTabController());
+    Get.lazyPut<DeliveredFailedTabController>(
+        () => DeliveredFailedTabController());
+    Get.lazyPut<DeliveredSuccessTabController>(
+        () => DeliveredSuccessTabController());
   }
 }

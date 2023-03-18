@@ -1,14 +1,15 @@
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_success_tab/delivered_success_tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:convenient_way_sender/app/core/widgets/custom_footer_smart_refresh.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/delivered_tab/delivered_tab_controller.dart';
-import 'delivered_tab_item.dart';
 
-class DeliveredTabView extends GetView<DeliveredTabController> {
-  const DeliveredTabView({Key? key}) : super(key: key);
+import 'delivered_success_tab_item.dart';
+
+class DeliveredSuccessTabView extends GetView<DeliveredSuccessTabController> {
+  const DeliveredSuccessTabView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +24,7 @@ class DeliveredTabView extends GetView<DeliveredTabController> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DeliveredTabItem(
+                        DeliveredSuccessTabItem(
                           package: controller.dataApis[index],
                           showInfoDeliver: () => controller.showInfoDeliver(
                               controller.dataApis[index].deliver!),

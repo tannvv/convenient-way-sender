@@ -16,7 +16,7 @@ class SuccessTabController extends SenderTabBaseController<Package>
   Future<void> fetchDataApi() async {
     PackageListModel requestModel = PackageListModel(
         senderId: _authController.account!.id,
-        status: PackageStatus.SENDER_CONFIRM_DELIVERED,
+        status: PackageStatus.SUCCESS,
         pageIndex: pageIndex,
         pageSize: pageSize);
     Future<List<Package>> future = _packageRepo.getList(requestModel);

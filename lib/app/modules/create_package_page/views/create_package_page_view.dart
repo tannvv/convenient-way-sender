@@ -1,4 +1,4 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:convenient_way_sender/app/modules/create_package_page/widgets/select_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -11,6 +11,7 @@ import 'package:convenient_way_sender/app/core/widgets/header_scaffold.dart';
 import 'package:convenient_way_sender/app/modules/create_package_page/widgets/location_pickup.dart';
 import 'package:convenient_way_sender/app/modules/create_package_page/widgets/product_info.dart';
 
+import '../../../library/cw_stepper.dart';
 import '../controllers/create_package_page_controller.dart';
 import '../widgets/receiver_info.dart';
 
@@ -67,12 +68,22 @@ class CreatePackagePageView extends GetView<CreatePackagePageController> {
                     : StepState.indexed),
             Step(
                 title: Text(
-                  'Thông tin\ncác sản\nphẩm',
+                  'Sản\nphẩm',
                   style: caption,
                 ),
                 content: const ProductInfo(),
                 isActive: controller.currentStep > 2,
                 state: controller.currentStep == 2
+                    ? StepState.editing
+                    : StepState.indexed),
+            Step(
+                title: Text(
+                  'Thời\ngian',
+                  style: caption,
+                ),
+                content: const SelectTime(),
+                isActive: controller.currentStep > 3,
+                state: controller.currentStep == 3
                     ? StepState.editing
                     : StepState.indexed),
           ]),

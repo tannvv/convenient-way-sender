@@ -87,7 +87,8 @@ class ReceivedInfo extends GetWidget<CreatePackagePageController> {
                           ]),
                     )
                   : Container(),
-            )
+            ),
+            Gap(12.h),
           ],
         ),
       ),

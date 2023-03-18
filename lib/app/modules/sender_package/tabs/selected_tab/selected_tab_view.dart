@@ -1,14 +1,15 @@
+import 'package:convenient_way_sender/app/modules/sender_package/tabs/selected_tab/selected_tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:convenient_way_sender/app/core/widgets/custom_footer_smart_refresh.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/deliver_pickup_tab/deliver_pickup_tab_controller.dart';
-import 'package:convenient_way_sender/app/modules/sender_package/tabs/deliver_pickup_tab/deliver_pickup_tab_item.dart';
 
-class DeliverPickupTabView extends GetView<DeliverPickupTabController> {
-  const DeliverPickupTabView({Key? key}) : super(key: key);
+import 'selected_tab_item.dart';
+
+class SelectedTabView extends GetView<SelectedTabController> {
+  const SelectedTabView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +24,7 @@ class DeliverPickupTabView extends GetView<DeliverPickupTabController> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DeliverPickupTabItem(
+                        SelectedTabItem(
                             package: controller.dataApis[index],
                             onConfirmPackage: () =>
                                 controller.accountConfirmPackage(
