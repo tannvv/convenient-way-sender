@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:convenient_way_sender/app/core/utils/material_dialog_service.dart';
 import 'package:convenient_way_sender/app/core/values/app_colors.dart';
 import 'package:convenient_way_sender/app/core/values/text_styles.dart';
@@ -43,7 +45,7 @@ class SelectTime extends GetWidget<CreatePackagePageController> {
           TimeRange? timeRange = await showTimeRangePickupDialog(context);
           controller.selectedTimePickup(timeRange);
         },
-        icon: const Icon(Icons.timelapse_outlined),
+        icon: const Icon(Icons.alarm_add_sharp),
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(AppColors.blue),
             padding: MaterialStatePropertyAll(
@@ -53,12 +55,27 @@ class SelectTime extends GetWidget<CreatePackagePageController> {
         label: const Text('Chọn thời gian lấy hàng'));
   }
 
+  String munites(int? munite){
+    if(munite == 0)
+      return "00";
+    else return munite.toString();
+  }
+
+  String hours(int? hour){
+    if(hour! < 10)
+      return "0" + hour.toString();
+    else return hour.toString();
+  }
+
   Widget _pickupTime() {
     return Obx(() {
       if (controller.pickupTimeStart.value == null ||
           controller.pickupTimeEnd.value == null) return Container();
       return Text(
-        '${controller.pickupTimeStart.value?.hour}:${controller.pickupTimeStart.value?.minute} - ${controller.pickupTimeEnd.value?.hour}:${controller.pickupTimeEnd.value?.minute}',
+        '${hours(controller.pickupTimeStart.value?.hour)}'
+            ':${munites(controller.pickupTimeStart.value?.minute)} '
+            '- ${hours(controller.pickupTimeEnd.value?.hour)}'
+            ':${munites(controller.pickupTimeEnd.value?.minute)}',
         style: subtitle1.copyWith(
           color: AppColors.lightBlack,
           fontWeight: FontWeight.w700,
@@ -139,7 +156,7 @@ class SelectTime extends GetWidget<CreatePackagePageController> {
               toText: 'Đến');
           controller.selectedTimeDelivery(timeRange);
         },
-        icon: const Icon(Icons.timelapse_outlined),
+        icon: const Icon(Icons.alarm_add_sharp),
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(AppColors.blue),
             padding: MaterialStatePropertyAll(
@@ -154,7 +171,10 @@ class SelectTime extends GetWidget<CreatePackagePageController> {
       if (controller.deliveryTimeStart.value == null ||
           controller.deliveryTimeEnd.value == null) return Container();
       return Text(
-        '${controller.deliveryTimeStart.value?.hour}:${controller.deliveryTimeStart.value?.minute} - ${controller.deliveryTimeEnd.value?.hour}:${controller.deliveryTimeEnd.value?.minute}',
+        '${hours(controller.deliveryTimeStart.value?.hour)}'
+            ':${munites(controller.deliveryTimeStart.value?.minute)} '
+            '- ${hours(controller.deliveryTimeEnd.value?.hour)}'
+            ':${munites(controller.deliveryTimeEnd.value?.minute)}',
         style: subtitle1.copyWith(
           color: AppColors.lightBlack,
           fontWeight: FontWeight.w700,
@@ -184,7 +204,7 @@ class SelectTime extends GetWidget<CreatePackagePageController> {
             ],
           ));
         },
-        icon: const Icon(Icons.timelapse_outlined),
+        icon: const Icon(Icons.timer),
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(AppColors.blue),
             padding: MaterialStatePropertyAll(
