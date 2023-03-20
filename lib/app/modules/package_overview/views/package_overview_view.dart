@@ -1,4 +1,8 @@
+import 'package:convenient_way_sender/app/data/models/package_model.dart';
+import 'package:convenient_way_sender/app/modules/package_detail/widgets/location_start_end.dart';
 import 'package:convenient_way_sender/app/modules/package_overview/controllers/package_overview_controller.dart';
+import 'package:convenient_way_sender/app/modules/package_overview/widgets/suggest_item.dart';
+import 'package:convenient_way_sender/app/modules/sender_package/widgets/wrap_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_format_money_vietnam/flutter_format_money_vietnam.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +62,10 @@ class PackageOverviewView extends GetView<PackageOverviewController> {
                       footer: CustomFooterSmartRefresh.defaultCustom(),
                       child: ListView.separated(
                           itemBuilder: (_, index) => GestureDetector(
-                                child: Container(),
+                              onTap: () => controller
+                                  .gotoDetail(controller.dataApis[index]),
+                              child: ListPackageItem(
+                                  listPackage: controller.dataApis[index]),
                               ),
                           padding: const EdgeInsets.all(20),
                           separatorBuilder: (_, index) => Gap(15.h),

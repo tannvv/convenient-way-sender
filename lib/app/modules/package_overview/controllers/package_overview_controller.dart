@@ -1,14 +1,15 @@
+import 'package:convenient_way_sender/app/data/constants/package_status.dart';
+import 'package:convenient_way_sender/app/data/models/package_model.dart';
+import 'package:convenient_way_sender/app/data/repository/request_model/package_list_model.dart';
 import 'package:convenient_way_sender/app/modules/package_overview/models/header_state.dart';
 import 'package:flutter_format_money_vietnam/flutter_format_money_vietnam.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/base/base_paging_controller.dart';
 import 'package:convenient_way_sender/app/core/controllers/auth_controller.dart';
 import 'package:convenient_way_sender/app/data/models/account_model.dart';
-import 'package:convenient_way_sender/app/data/models/suggest_package_model.dart';
 import 'package:convenient_way_sender/app/data/repository/package_req.dart';
-import 'package:convenient_way_sender/app/data/repository/request_model/suggest_package_request_model.dart';
 
-class PackageOverviewController extends BasePagingController<SuggestPackage> {
+class PackageOverviewController extends BasePagingController<Package> {
   final AuthController _authController = Get.find<AuthController>();
   final HeaderState headerState = HeaderState();
 
@@ -22,7 +23,7 @@ class PackageOverviewController extends BasePagingController<SuggestPackage> {
 
   final PackageReq _packageRepo = Get.find(tag: (PackageReq).toString());
 
-  void gotoDetail(SuggestPackage suggest) async {}
+  void gotoDetail(Package package) async {}
 
   void toggleHeader() {
     headerState.toggle();
@@ -32,14 +33,14 @@ class PackageOverviewController extends BasePagingController<SuggestPackage> {
   Future<void> fetchDataApi() async {
     String? accountId = _authController.account?.id;
     if (accountId != null) {
-      SuggestPackageRequestModel model = SuggestPackageRequestModel(
-        deliverId: accountId,
+      PackageListModel model = PackageListModel(
+        senderId: accountId,
+        status: 'WAITING,APPROVED,SELECTED,PICKUP_SUCCESS',
         pageSize: pageSize,
         pageIndex: pageIndex,
       );
-      Future<List<SuggestPackage>> future =
-          _packageRepo.getSuggestPackage(model);
-      await callDataService<List<SuggestPackage>>(future,
+      Future<List<Package>> future = _packageRepo.getList(model);
+      await callDataService<List<Package>>(future,
           onSuccess: onSuccess, onError: onError);
     }
   }
