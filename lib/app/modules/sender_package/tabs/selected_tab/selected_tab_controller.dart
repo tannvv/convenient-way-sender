@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:barcode/barcode.dart';
+import 'package:convenient_way_sender/app/data/repository/request_model/cancel_package_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_format_money_vietnam/flutter_format_money_vietnam.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -204,5 +206,24 @@ class SelectedTabController extends SenderTabBaseController<Package>
         ],
       ),
     );
+  }
+
+  Future<void> senderCancelPackage(Package package) async {
+    MaterialDialogService.showDeleteDialog(
+        onConfirmTap: () {
+          CancelPackageModel model = CancelPackageModel(
+            packageId: package.id!,
+            reason: '',
+          );
+          var future = _packageRepo.senderCancel(model);
+          callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
+              onSuccess: (response) {
+            ToastService.showSuccess('Hủy gói hàng thành công');
+            onRefresh();
+          }, onError: showError);
+        },
+        title: 'Xác nhận',
+        msg:
+            'Bạn chắc chắn muốn hủy kiện hàng này, bạn sẽ bị trừ (${package.priceShip.toVND()}) ?');
   }
 }

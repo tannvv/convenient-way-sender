@@ -1,3 +1,4 @@
+import 'package:convenient_way_sender/app/core/utils/material_dialog_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/base/sender_tab_base_controller.dart';
@@ -29,7 +30,21 @@ class WaitingTabController extends SenderTabBaseController<Package>
   }
 
   Future<void> senderCancelPackage(String packageId) async {
-    cancelPackageDialog(() => {senderCancelPackageApi(packageId)});
+    MaterialDialogService.showDeleteDialog(
+        onConfirmTap: () {
+          CancelPackageModel model = CancelPackageModel(
+            packageId: packageId,
+            reason: '',
+          );
+          var future = _packageRepo.senderCancel(model);
+          callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
+              onSuccess: (response) {
+            ToastService.showSuccess('Hủy gói hàng thành công');
+            onRefresh();
+          }, onError: showError);
+        },
+        title: 'Xác nhận',
+        msg: 'Bạn chắc chắn muốn hủy kiện hàng này');
   }
 
   Future<void> senderCancelPackageApi(String packageId) async {

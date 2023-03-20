@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:convenient_way_sender/app/core/values/app_colors.dart';
-import 'package:convenient_way_sender/app/core/values/shadow_styles.dart';
 import 'package:convenient_way_sender/app/core/widgets/button_color.dart';
 import 'package:convenient_way_sender/app/data/models/package_model.dart';
 import 'package:convenient_way_sender/app/modules/sender_package/widgets/wrap_item.dart';
