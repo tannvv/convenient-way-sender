@@ -42,7 +42,7 @@ class PickupSuccessTabController extends SenderTabBaseController<Package>
   Future<void> accountDeliveredPackage(String packageId) async {
     if (await PickUpFileController().scanQR() ==
         packageId.split('-')[4].substring(0, 8)) {
-      var future = _packageRepo.deliverySuccess(packageId);
+      var future = _packageRepo.deliveredSuccess(packageId);
       await callDataService<SimpleResponseModel>(future, onSuccess: (response) {
         ToastService.showSuccess(response.message ?? 'Thành công');
         refreshController.requestRefresh();
@@ -67,7 +67,7 @@ class PickupSuccessTabController extends SenderTabBaseController<Package>
       return;
     }
     if (code == packageId.split('-')[4].substring(0, 8)) {
-      var future = _packageRepo.deliverySuccess(packageId);
+      var future = _packageRepo.deliveredSuccess(packageId);
       callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
           onSuccess: (response) {
         Get.back();

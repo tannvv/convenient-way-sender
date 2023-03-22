@@ -28,23 +28,28 @@ class DeliveredSuccessTabController extends SenderTabBaseController<Package>
   }
 
   Future<void> confirmFailed(String packageId) async {
-    MaterialDialogService.showConfirmDialog(onConfirmTap: () {
-      var future = _packageRepo.senderConfirmDeliveryFailed(packageId);
-      callDataService<SimpleResponseModel>(
-        future,
-        onSuccess: (_) {
-          ToastService.showSuccess('Cập nhật thành công');
-        },
-        onError: showError,
-        onStart: showOverlay,
-        onComplete: hideOverlay,
-      );
-    });
+    // Tạo màn hình riêng
+    MaterialDialogService.showDeleteDialog(
+        msg: 'Bạn có chắc là muốn báo xấu gói hàng này?',
+        onConfirmTap: () {
+          Get.toNamed(Routes.REPORT_PACKAGE);
+          onRefresh();
+          // var future = _packageRepo.senderConfirmDeliveryFailed(packageId);
+          // callDataService<SimpleResponseModel>(
+          //   future,
+          //   onSuccess: (_) {
+          //     ToastService.showSuccess('Cập nhật thành công');
+          //   },
+          //   onError: showError,
+          //   onStart: showOverlay,
+          //   onComplete: hideOverlay,
+          // );
+        });
   }
 
   Future<void> confirmSuccess(String packageId) async {
     MaterialDialogService.showConfirmDialog(onConfirmTap: () {
-      var future = _packageRepo.senderConfirmDeliverySuccess(packageId);
+      var future = _packageRepo.confirmSuccess(packageId);
       callDataService<SimpleResponseModel>(
         future,
         onSuccess: (_) {

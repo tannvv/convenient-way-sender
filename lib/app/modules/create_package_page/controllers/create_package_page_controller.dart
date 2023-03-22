@@ -91,11 +91,11 @@ class CreatePackagePageController extends BaseController {
   double? weight;
   int priceShip = 0;
   String note = '';
-  Rx<TimeOfDay?> pickupTimeStart = Rx<TimeOfDay?>(null);
-  Rx<TimeOfDay?> pickupTimeEnd = Rx<TimeOfDay?>(null);
-  Rx<TimeOfDay?> deliveryTimeStart = Rx<TimeOfDay?>(null);
-  Rx<TimeOfDay?> deliveryTimeEnd = Rx<TimeOfDay?>(null);
-  Rx<DateTime?> expiredDate = Rx<DateTime?>(null);
+  Rx<TimeOfDay?> pickupTimeStart = Rx<TimeOfDay?>(TimeOfDay(hour: 6, minute: 0));
+  Rx<TimeOfDay?> pickupTimeEnd = Rx<TimeOfDay?>(TimeOfDay(hour: 10, minute: 0));
+  Rx<TimeOfDay?> deliveryTimeStart = Rx<TimeOfDay?>(TimeOfDay(hour: 15, minute: 0));
+  Rx<TimeOfDay?> deliveryTimeEnd = Rx<TimeOfDay?>(TimeOfDay(hour: 19, minute: 0));
+  Rx<DateTime?> expiredDate = Rx<DateTime?>(DateTime.now().copyWith(hour: 0,minute: 0,microsecond: 0,millisecond: 0,second: 0).add(Duration(days: 2)));
   RxList<CreateProductModel> products = <CreateProductModel>[].obs;
 
   final TextEditingController pickupTxtCtrl = TextEditingController();

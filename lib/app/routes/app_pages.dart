@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:get/get.dart';
 
 import '../modules/create_package_page/bindings/create_package_page_binding.dart';
@@ -22,6 +20,8 @@ import '../modules/profile_page/bindings/profile_page_binding.dart';
 import '../modules/profile_page/views/profile_page_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/report-package/bindings/report_package_binding.dart';
+import '../modules/report-package/views/report_package_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
 import '../modules/tracking_package/bindings/tracking_package_binding.dart';
@@ -32,6 +32,8 @@ import '../modules/verify-otp/bindings/verify_otp_binding.dart';
 import '../modules/verify-otp/views/verify_otp_view.dart';
 import '../modules/vnpay/bindings/vnpay_binding.dart';
 import '../modules/vnpay/views/vnpay_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 
@@ -115,6 +117,11 @@ class AppPages {
       name: _Paths.PROFILE_PAGE,
       page: () => ProfilePageView(),
       binding: ProfilePageBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORT_PACKAGE,
+      page: () => const ReportPackageView(),
+      binding: ReportPackageBinding(),
     ),
   ];
 }

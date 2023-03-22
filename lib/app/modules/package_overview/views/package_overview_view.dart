@@ -191,8 +191,9 @@ class PackageOverviewView extends GetView<PackageOverviewController> {
           child: Stack(
             children: [
               SvgPicture.asset(
-                AppAssets.homeBg,
+                AppAssets.booking,
                 fit: BoxFit.cover,
+                height: 1000,
               ),
               SafeArea(child: _header())
             ],

@@ -18,6 +18,7 @@ abstract class Routes {
   static const TRACKING_PACKAGE = _Paths.TRACKING_PACKAGE;
   static const PACKAGE_DETAIL = _Paths.PACKAGE_DETAIL;
   static const PROFILE_PAGE = _Paths.PROFILE_PAGE;
+  static const REPORT_PACKAGE = _Paths.REPORT_PACKAGE;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const TRACKING_PACKAGE = '/tracking-package';
   static const PACKAGE_DETAIL = '/package-detail';
   static const PROFILE_PAGE = '/profile-page';
+  static const REPORT_PACKAGE = '/report-package';
 }

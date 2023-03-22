@@ -47,7 +47,7 @@ class SelectedTabController extends SenderTabBaseController<Package>
         msg: 'Xác nhân đã đưa hàng cho đúng người lấy hàng giùm?',
         closeOnFinish: false,
         onConfirmTap: () async {
-          var future = _packageRepo.confirmPackage(packageId);
+          var future = _packageRepo.pickupSuccess(packageId);
           callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
               onSuccess: (response) {
             Get.back();
@@ -75,7 +75,7 @@ class SelectedTabController extends SenderTabBaseController<Package>
       return;
     }
     if (code == packageId.split('-')[0]) {
-      var future = _packageRepo.confirmPackage(packageId);
+      var future = _packageRepo.pickupSuccess(packageId);
       callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
           onSuccess: (response) {
         Get.back();
