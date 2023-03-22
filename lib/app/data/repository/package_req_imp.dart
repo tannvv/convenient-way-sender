@@ -115,7 +115,7 @@ class PackageReqImp extends BaseRepository implements PackageReq {
 
   @override
   Future<SimpleResponseModel> deliverySuccess(String packageId) {
-    String endpoint = '${DioProvider.baseUrl}/packages/delivery-success';
+    String endpoint = '${DioProvider.baseUrl}/packages/delivered-success';
     var dioCall =
         dioClient.put(endpoint, queryParameters: {'packageId': packageId});
     try {
@@ -128,7 +128,7 @@ class PackageReqImp extends BaseRepository implements PackageReq {
 
   @override
   Future<SimpleResponseModel> confirmPackage(String packageId) {
-    String endpoint = '${DioProvider.baseUrl}/packages/confirm-packages';
+    String endpoint = '${DioProvider.baseUrl}/packages/pickup-success';
     var dioCall =
         dioClient.put(endpoint, queryParameters: {'packageId': packageId});
     try {
