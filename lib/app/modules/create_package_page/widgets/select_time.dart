@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:convenient_way_sender/app/core/utils/material_dialog_service.dart';
 import 'package:convenient_way_sender/app/core/values/app_colors.dart';
 import 'package:convenient_way_sender/app/core/values/text_styles.dart';

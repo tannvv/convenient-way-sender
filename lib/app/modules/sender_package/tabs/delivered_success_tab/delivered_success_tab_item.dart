@@ -42,6 +42,16 @@ class DeliveredSuccessTabItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ColorButton(
+                'Gửi đánh giá',
+                icon: Icons.star,
+                onPressed: onSendFeedbackDriver,
+                backgroundColor: Colors.yellow,
+                textColor: Colors.amber[800]!,
+                radius: 8.sp,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.h),
+              ),
+              Gap(8.w),
+              ColorButton(
                 'Báo có vấn đề',
                 icon: Icons.sms_failed,
                 onPressed: onConfirmFailed,
@@ -56,14 +66,14 @@ class DeliveredSuccessTabItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ColorButton(
-                'Gửi đánh giá',
-                icon: Icons.star,
+                'Đã nhận được hàng',
+                icon: Icons.task_alt_sharp,
                 onPressed: onSendFeedbackDriver,
-                backgroundColor: Colors.yellow,
-                textColor: Colors.amber[800]!,
+                backgroundColor: Colors.greenAccent,
+                textColor: Colors.green,
                 radius: 8.sp,
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.h),
-              )
+              ),
             ],
           )
         ],

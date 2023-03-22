@@ -1,28 +1,20 @@
+import 'package:convenient_way_sender/app/core/controllers/cw_map_controller.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:convenient_way_sender/app/core/controllers/auth_controller.dart';
-import 'package:convenient_way_sender/app/core/services/animated_map_service.dart';
-import 'package:convenient_way_sender/app/core/values/app_values.dart';
 import 'package:convenient_way_sender/app/data/constants/notification_type.dart';
 import 'package:convenient_way_sender/app/data/models/package_model.dart';
 
 class TrackingPackageController extends GetxController {
   Package package = Get.arguments as Package;
-
   final AuthController _authController = Get.find<AuthController>();
-
   LatLng? locationStart;
   LatLng? locationEnd;
   Rx<LatLng?> locationDeliver = Rx(null);
-
   LatLngBounds currentBounds = LatLngBounds();
-  MapController? _mapController;
-  AnimatedMapService? _animatedMapService;
-
-  MapController? get mapController => _mapController;
+  final CwMapController cwMapController = CwMapController();
 
   @override
   void onInit() {
@@ -34,21 +26,16 @@ class TrackingPackageController extends GetxController {
     locationStart = LatLng(package.startLatitude!, package.startLongitude!);
     locationEnd =
         LatLng(package.destinationLatitude!, package.destinationLongitude!);
-    createBounds();
     onTracking();
   }
 
-  void onMapCreated(MapController? mapController) {
-    _mapController = mapController;
-    _animatedMapService = AnimatedMapService(controller: _mapController!);
-    gotoCurrentBound();
+  void onMapReady() async {
+    await cwMapController.refreshCurrentLocation();
+    createBounds();
   }
 
   void gotoCurrentBound() {
-    if (_animatedMapService != null) {
-      _animatedMapService?.move(
-          currentBounds.center, AppValues.overviewZoomLevel);
-    }
+    cwMapController.centerZoomFitBounds(currentBounds);
   }
 
   void createBounds() {
