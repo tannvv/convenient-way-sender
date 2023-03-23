@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/base/sender_tab_base_controller.dart';
 import 'package:convenient_way_sender/app/core/controllers/auth_controller.dart';
@@ -14,6 +15,12 @@ class DeliveredSuccessTabController extends SenderTabBaseController<Package>
     with GetSingleTickerProviderStateMixin {
   final AuthController _authController = Get.find<AuthController>();
   final PackageReq _packageRepo = Get.find(tag: (PackageReq).toString());
+
+  @override
+  void onInit() {
+    super.onInit();
+    onListeningChange();
+  }
 
   @override
   Future<void> fetchDataApi() async {
@@ -64,5 +71,13 @@ class DeliveredSuccessTabController extends SenderTabBaseController<Package>
 
   Future<void> sendFeedback(Package package) async {
     await Get.toNamed(Routes.FEEDBACK_FOR_DELIVER, arguments: package);
+  }
+
+  void onListeningChange() {
+    FirebaseMessaging.onMessage.listen((event) {
+      if(event.notification?.title == "Hoàn tất"){
+        onRefresh();
+      }
+    });
   }
 }
