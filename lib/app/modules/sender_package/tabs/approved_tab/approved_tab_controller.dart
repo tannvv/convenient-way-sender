@@ -1,19 +1,14 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:convenient_way_sender/app/core/utils/material_dialog_service.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/base/base_paging_controller.dart';
 import 'package:convenient_way_sender/app/core/controllers/auth_controller.dart';
 import 'package:convenient_way_sender/app/core/utils/toast_service.dart';
-import 'package:convenient_way_sender/app/core/values/text_styles.dart';
 import 'package:convenient_way_sender/app/data/constants/package_status.dart';
 import 'package:convenient_way_sender/app/data/models/package_model.dart';
 import 'package:convenient_way_sender/app/data/repository/package_req.dart';
 import 'package:convenient_way_sender/app/data/repository/request_model/cancel_package_model.dart';
 import 'package:convenient_way_sender/app/data/repository/request_model/package_list_model.dart';
-import 'package:convenient_way_sender/app/data/repository/response_model/simple_response_model.dart';
-import 'package:convenient_way_sender/app/network/exceptions/base_exception.dart';
-
 class ApprovedTabController extends BasePagingController<Package>
     with GetSingleTickerProviderStateMixin {
   final AuthController _authController = Get.find<AuthController>();
@@ -39,52 +34,21 @@ class ApprovedTabController extends BasePagingController<Package>
   }
 
   Future<void> senderCancelPackage(String packageId) async {
-    if (reason == null || reason!.isEmpty) {
-      ToastService.showError('Vui lòng nhập lý do hủy');
-      return;
-    }
-
-    CancelPackageModel requestModel = CancelPackageModel(
-      packageId: packageId,
-      reason: reason!,
-    );
-    Future<SimpleResponseModel> future =
-        _packageRepo.senderCancel(requestModel);
-    await callDataService<SimpleResponseModel>(future, onSuccess: (data) {
-      ToastService.showSuccess('Hủy gói hàng thành công');
-      refresh();
-    }, onError: (error) {
-      if (error is BaseException) {
-        ToastService.showError(error.message);
-      } else {
-        ToastService.showError('Có lỗi xảy ra');
-      }
-    });
-  }
-
-  Widget _cancelWidget() {
-    return Container(
-      padding: EdgeInsets.only(top: 20.h),
-      height: 100.h,
-      width: 220.w,
-      child: Column(
-        children: [
-          Text(
-            'Lý do hủy',
-            style: subtitle2.copyWith(fontSize: 16.sp),
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            onChanged: (value) {
-              reason = value;
-            },
-            decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 20.w)),
-          ),
-        ],
-      ),
-    );
+    MaterialDialogService.showDeleteDialog(
+        onConfirmTap: () {
+          CancelPackageModel model = CancelPackageModel(
+            packageId: packageId,
+            reason: '',
+          );
+          var future = _packageRepo.senderCancel(model);
+          callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
+              onSuccess: (response) {
+            ToastService.showSuccess('Hủy gói hàng thành công');
+            onRefresh();
+          }, onError: showError);
+        },
+        title: 'Xác nhận',
+        msg: 'Bạn chắc chắn muốn hủy kiện hàng này');
   }
 
   void onListeningChange() {

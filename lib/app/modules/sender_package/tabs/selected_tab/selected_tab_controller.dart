@@ -1,8 +1,13 @@
 import 'dart:async';
 import 'package:barcode/barcode.dart';
+<<<<<<< HEAD
 import 'package:convenient_way_sender/app/core/services/firebase_messaging_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+=======
+import 'package:convenient_way_sender/app/data/repository/request_model/cancel_package_model.dart';
+>>>>>>> 9a49ab58b69af07092a51f822df50f8107dd17e3
 import 'package:flutter/material.dart';
+import 'package:flutter_format_money_vietnam/flutter_format_money_vietnam.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -53,7 +58,7 @@ class SelectedTabController extends SenderTabBaseController<Package>
         msg: 'Xác nhân đã đưa hàng cho đúng người lấy hàng giùm?',
         closeOnFinish: false,
         onConfirmTap: () async {
-          var future = _packageRepo.confirmPackage(packageId);
+          var future = _packageRepo.pickupSuccess(packageId);
           callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
               onSuccess: (response) {
             Get.back();
@@ -81,7 +86,7 @@ class SelectedTabController extends SenderTabBaseController<Package>
       return;
     }
     if (code == packageId.split('-')[0]) {
-      var future = _packageRepo.confirmPackage(packageId);
+      var future = _packageRepo.pickupSuccess(packageId);
       callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
           onSuccess: (response) {
         Get.back();
@@ -214,6 +219,7 @@ class SelectedTabController extends SenderTabBaseController<Package>
     );
   }
 
+<<<<<<< HEAD
   void onListeningChange() {
     FirebaseMessaging.onMessage.listen((event) {
       if(event.notification?.title == "Lấy hàng thành công" ||
@@ -223,4 +229,24 @@ class SelectedTabController extends SenderTabBaseController<Package>
     });
   }
 
+=======
+  Future<void> senderCancelPackage(Package package) async {
+    MaterialDialogService.showDeleteDialog(
+        onConfirmTap: () {
+          CancelPackageModel model = CancelPackageModel(
+            packageId: package.id!,
+            reason: '',
+          );
+          var future = _packageRepo.senderCancel(model);
+          callDataService(future, onStart: showOverlay, onComplete: hideOverlay,
+              onSuccess: (response) {
+            ToastService.showSuccess('Hủy gói hàng thành công');
+            onRefresh();
+          }, onError: showError);
+        },
+        title: 'Xác nhận',
+        msg:
+            'Bạn chắc chắn muốn hủy kiện hàng này, bạn sẽ bị trừ (${package.priceShip.toVND()}) ?');
+  }
+>>>>>>> 9a49ab58b69af07092a51f822df50f8107dd17e3
 }

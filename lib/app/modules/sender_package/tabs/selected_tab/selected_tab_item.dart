@@ -17,6 +17,7 @@ class SelectedTabItem extends StatelessWidget {
       required this.onConfirmPackage,
       required this.onCodeConfirm,
       required this.showMapTracking,
+      required this.onCancelPackage,
       required this.onShowDeliverInfo})
       : super(key: key);
   final Package package;
@@ -24,6 +25,7 @@ class SelectedTabItem extends StatelessWidget {
   final Function() onConfirmPackage;
   final Function() onCodeConfirm;
   final Function() onShowDeliverInfo;
+  final Function() onCancelPackage;
   final Function() showMapTracking;
   @override
   Widget build(BuildContext context) {
@@ -81,6 +83,20 @@ class SelectedTabItem extends StatelessWidget {
                 onPressed: onConfirmPackage,
                 backgroundColor: AppColors.primary800,
                 textColor: AppColors.primary800,
+                radius: 8.sp,
+                //padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ColorButton(
+                'Hủy',
+                icon: Icons.cancel,
+                onPressed: onCancelPackage,
+                backgroundColor: Colors.red,
+                textColor: Colors.red,
                 radius: 8.sp,
                 //padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
               ),

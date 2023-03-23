@@ -35,6 +35,9 @@ class SelectedTabView extends GetView<SelectedTabController> {
                                 .showMapTracking(controller.dataApis[index]),
                             onShowQR: () => controller
                                 .showQRCode(controller.dataApis[index].id!),
+                            onCancelPackage: () =>
+                                controller.senderCancelPackage(
+                                    controller.dataApis[index]),
                             onShowDeliverInfo: () => controller.showInfoDeliver(
                                 controller.dataApis[index].deliver!))
                       ],
