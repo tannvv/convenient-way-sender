@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,12 @@ class ApprovedTabController extends BasePagingController<Package>
     with GetSingleTickerProviderStateMixin {
   final AuthController _authController = Get.find<AuthController>();
   final PackageReq _packageRepo = Get.find(tag: (PackageReq).toString());
+
+  @override
+  void onInit() {
+    super.onInit();
+    onListeningChange();
+  }
 
   String? reason;
   @override
@@ -79,4 +86,13 @@ class ApprovedTabController extends BasePagingController<Package>
       ),
     );
   }
+
+  void onListeningChange() {
+    FirebaseMessaging.onMessage.listen((event) {
+      if(event.notification?.title == "Kiện hàng đã được nhận"){
+        onRefresh();
+      }
+    });
+  }
+  
 }

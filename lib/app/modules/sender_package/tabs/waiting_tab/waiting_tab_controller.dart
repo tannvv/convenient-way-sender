@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:convenient_way_sender/app/core/base/sender_tab_base_controller.dart';
 import 'package:convenient_way_sender/app/core/controllers/auth_controller.dart';
@@ -9,7 +9,6 @@ import 'package:convenient_way_sender/app/data/repository/package_req.dart';
 import 'package:convenient_way_sender/app/data/repository/request_model/cancel_package_model.dart';
 import 'package:convenient_way_sender/app/data/repository/request_model/package_list_model.dart';
 import 'package:convenient_way_sender/app/data/repository/response_model/simple_response_model.dart';
-import 'package:convenient_way_sender/app/network/exceptions/base_exception.dart';
 
 class WaitingTabController extends SenderTabBaseController<Package>
     with GetSingleTickerProviderStateMixin {
@@ -48,5 +47,13 @@ class WaitingTabController extends SenderTabBaseController<Package>
       ToastService.showSuccess('Hủy gói hàng thành công');
       refresh();
     }, onError: showError, onStart: showOverlay, onComplete: hideOverlay);
+  }
+
+  void onListeningChange() {
+    FirebaseMessaging.onMessage.listen((event) {
+      if(event.notification?.title == "Đơn hàng đã được duyệt"){
+        onRefresh();
+      }
+    });
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:barcode/barcode.dart';
+import 'package:convenient_way_sender/app/core/services/firebase_messaging_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,6 +28,12 @@ class SelectedTabController extends SenderTabBaseController<Package>
     with GetSingleTickerProviderStateMixin {
   final AuthController _authController = Get.find<AuthController>();
   final PackageReq _packageRepo = Get.find(tag: (PackageReq).toString());
+
+  @override
+  void onInit() {
+    super.onInit();
+    onListeningChange();
+  }
 
   @override
   Future<void> fetchDataApi() async {
@@ -205,4 +213,14 @@ class SelectedTabController extends SenderTabBaseController<Package>
       ),
     );
   }
+
+  void onListeningChange() {
+    FirebaseMessaging.onMessage.listen((event) {
+      if(event.notification?.title == "Lấy hàng thành công" ||
+      event.notification?.title == "Lấy hàng thất bại"){
+        onRefresh();
+      }
+    });
+  }
+
 }
